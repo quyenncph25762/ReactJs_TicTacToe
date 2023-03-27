@@ -1,19 +1,22 @@
+import { useState } from "react";
 import { Winner } from "../helpers";
 import Square from "./square";
 
 const Board = ({ board, setBoard, isXMove, setIsXMove }) => {
+    const [isWaiting, setIsWaiting] = useState(false);
     const winner = Winner(board);
-    const handleClick = (index) => {
+    const handleClick = async (index) => {
         const boardCopy = [...board];
-        if (winner || boardCopy[index]) return;
+        if (winner || boardCopy[index] || isWaiting) return;
         boardCopy[index] = isXMove ? "X" : "O";
         setBoard(boardCopy);
         setIsXMove(!isXMove);
+        setIsWaiting(true);
         const winnerCopy = Winner(boardCopy);
         if (winnerCopy) {
             return;
         }
-        setTimeout(() => {
+        await new Promise((resolve) => setTimeout(() => {
             const boardFilter = boardCopy
                 .map((item, index) => item === null ? index : null)
                 .filter((item) => item !== null);
@@ -23,7 +26,9 @@ const Board = ({ board, setBoard, isXMove, setIsXMove }) => {
             boardCopy[botIndex] = isXMove ? "O" : "X";
             setBoard(boardCopy);
             setIsXMove(true);
-        }, 1000);
+            setIsWaiting(false);
+            resolve();
+        }, 1000))
     };
     const playerWinner = (player) => {
         const boardIndex = [...board];
