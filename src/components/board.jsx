@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Winner } from "../helpers";
 import Square from "./square";
 
-const Board = ({ board, setBoard, isXMove, setIsXMove }) => {
-    const [isWaiting, setIsWaiting] = useState(false);
+const Board = ({ board, setBoard, isXMove, setIsXMove, isWaiting, setIsWaiting }) => {
     const winner = Winner(board);
     const handleClick = async (index) => {
         const boardCopy = [...board];
@@ -28,7 +27,7 @@ const Board = ({ board, setBoard, isXMove, setIsXMove }) => {
             setIsXMove(true);
             setIsWaiting(false);
             resolve();
-        }, 1000))
+        }, 3000))
     };
     const playerWinner = (player) => {
         const boardIndex = [...board];
