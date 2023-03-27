@@ -7,6 +7,7 @@ const App = () => {
     const resetGame = () => {
         setBoard(Array(9).fill(null))
         setIsXMove(true)
+        setIsWaiting(false)
     }
 
     return <div className="flex justify-center items-center h-screen flex-col bg-[#1E293B]">
