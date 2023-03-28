@@ -27,7 +27,7 @@ const Board = ({ board, setBoard, isXMove, setIsXMove, isWaiting, setIsWaiting }
             setIsXMove(true);
             setIsWaiting(false);
             resolve();
-        }, 1000))
+        }, 3000))
         // setIsWaiting(false);
     };
     const playerWinner = (player) => {
